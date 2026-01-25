@@ -14,12 +14,15 @@ jobs:
       
       - name: Build
         run: |
-          go build -o prometheus-msk-discovery-linux-amd64
+          GOOS=linux GOARCH=amd64 go build -o prometheus-msk-discovery-linux-amd64
+          GOOS=linux GOARCH=arm64 go build -o prometheus-msk-discovery-linux-arm64
       
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: "prometheus-msk-discovery-linux-amd64"
+          files: |
+            prometheus-msk-discovery-linux-amd64
+            prometheus-msk-discovery-linux-arm64
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
