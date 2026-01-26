@@ -2,7 +2,7 @@ FROM golang:1.23-alpine AS builder
 ARG TARGETOS
 ARG TARGETARCH
 WORKDIR /src
-RUN apk --no-cache add git
+RUN apk --no-cache --allow-untrusted add git
 COPY main.go go.mod go.sum ./
 RUN CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH} go build -o /bin/prometheus-msk-discovery .
 
